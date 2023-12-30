@@ -25,6 +25,7 @@ void init(poly& p) {
 int input(poly& p) {
   int count;
   cin >> count;
+//  scanf("%d",&count);
   p.count = count;
   int max = -1;
   for (int i = 0; i < count; i++) {

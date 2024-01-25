@@ -9,35 +9,34 @@ int main() {
     cin >> nums[i];
   }
   bool flag = false;
+  bool flag2 = false;
   int maxsum = 0;
   int maxi = 0;
   int maxj = 0;
-  int i = 0;
-  int j = -1;
-  int sum = 0;
+  int i = 0;  // start
+  int j = 0;  // end
+  int sum = -1;
   for (int k = 0; k < N; k++) {
-    if (nums[k] > 0) {
-      if (j + 1 < N) j++;
-      sum += nums[k];
-      flag = true;
-      if (sum > maxsum) {
-        maxi = i;
-        maxj = j;
-        maxsum = sum;
-      }
+    if (nums[k] >= 0) flag = true;
+    if (nums[k] > 0) flag2 = true;
+    if (sum < 0) {
+      sum = nums[k];
+      i = k;
+      j = k;
     } else {
-      if (sum + nums[k] < 0) {
-        i = k + 1;
-        j = k;
-        sum = 0;
-      } else {
-        if (j + 1 < N) j++;
-        sum += nums[k];
-      }
+      sum += nums[k];
+      j++;
+    }
+    if (sum > maxsum) {
+      maxi = i;
+      maxj = j;
+      maxsum = sum;
     }
   }
-  if (flag == true) {
+  if (flag == true && flag2 == true) {
     cout << maxsum << ' ' << nums[maxi] << ' ' << nums[maxj];
+  } else if (flag2 == false) {
+    cout << "0 0 0";
   } else {
     cout << "0 " << nums[0] << ' ' << nums[N - 1];
   }

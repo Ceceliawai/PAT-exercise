@@ -72,7 +72,7 @@ int main() {
   mytime latest;
   latest.hour = 17;
   latest.minute = 0;
-  latest.second = 0;
+  latest.second = 1;
   for (int i = 0; i < K; i++) {
     // 初始化
     overtime[i] = starttime;
@@ -94,13 +94,6 @@ int main() {
 
     if (cmptime(customers[i].arrive, latest) == false) {
       break;  // 到达的就晚了，不计算在平均时间内
-    }
-    if (cmptime(overtime[index], latest) == false) {
-      // 等到最后发现自己无法被服务了，但到达时间在17前的
-      count++;
-      double t = timeval(customers[i].arrive, overtime[index]);
-      sum += t;
-      continue;
     }
     count++;
     if (cmptime(customers[i].arrive, overtime[index])) {  // 到了但还没有空窗口

@@ -7,12 +7,11 @@
 
 using namespace std;
 
-int w[2000][2000];          // i和j之间的通话时间长度
-int w_per[2000];            // 单个人的通话长度时间积累
+int w_per[2001];            // 单个人的通话长度时间积累
 map<string, int> names;     // 为了快速找到名字对应的下标
 map<int, string> intoname;  // 找到下标对应的名字
-int gang_num[2000];         // index下标的人属于哪个gang
-int gang_member[2000];      // index对应的gang的人数
+int gang_num[2001];         // index下标的人属于哪个gang
+int gang_member[2001];      // index对应的gang的人数
 int gang_count = 0;         // 目前总的gang的个数
 vector<string> result;      // 首领名字+人数
 int cnt = 0;                // 人的个数，用于维护下标
@@ -21,9 +20,8 @@ int N, K;
 
 int main() {
     cin >> N >> K;
-    fill(w[0], w[0] + 1000 * 1000, 0);  // initial
-    fill(gang_num, gang_num + 1000, -1);
-    fill(w_per, w_per + 1000, 0);
+    fill(gang_num, gang_num + 2001, -1);
+    fill(w_per, w_per + 2001, 0);
 
     for (int i = 0; i < N; i++) {
         string a, b;
@@ -41,8 +39,6 @@ int main() {
         }
         int ai = names[a];
         int bi = names[b];
-        w[ai][bi] += k;
-        w[bi][ai] += k;
         w_per[ai] += k;
         w_per[bi] += k;
 

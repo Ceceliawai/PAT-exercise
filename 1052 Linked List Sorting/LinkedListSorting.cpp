@@ -4,20 +4,23 @@
 #include <iostream>
 #include <vector>
 int mydata[1000000], pointer[1000000];
+bool inputadds[1000000];
 using namespace std;
 vector<int> adds;
 bool mycmp(int a, int b) { return mydata[a] < mydata[b]; }
 int main() {
     int N, curad, curdata, nextad, headad;
     cin >> N >> headad;
+    fill(inputadds, inputadds + 1000000, false);
     for (int i = 0; i < N; i++) {
         cin >> curad >> curdata >> nextad;
         mydata[curad] = curdata;
         pointer[curad] = nextad;
+        inputadds[curad] = true;
     }
     curad = headad;
     while (curad != -1) {
-        adds.push_back(curad);
+        if (inputadds[curad] == true) adds.push_back(curad);
         curad = pointer[curad];
     }
     if (adds.size() == 0) {

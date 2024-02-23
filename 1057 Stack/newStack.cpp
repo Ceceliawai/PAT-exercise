@@ -46,6 +46,7 @@ int main() {
             index = getindex(val);
             if (nums.size() != 0 && val < nums[nums.size() - 1])
                 nums.insert(nums.begin() + index, val);
+            // 在第一个参数这个位置前面插入一个数
             else
                 nums.push_back(val);
             // nums.push_back(val);

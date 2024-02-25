@@ -1,54 +1,46 @@
 #include <algorithm>
-#include <cstdio>
-#include <cstring>
+#include <iostream>
 using namespace std;
-const int maxn = 10010;
-const int maxm = 110;
-const int INF = (1 << 30) - 1;
-int dp[maxn][maxm];
-int w[maxn];
-bool choice[maxn][maxm] = {false};
-bool cmp(int a, int b) { return a > b; }
+int coins[10010], dp[10010][110], N, M;
+bool choice[110][110];
+bool mycmp(int a, int b) { return a > b; }
 int main() {
-    int n, m;
-    scanf("%d%d", &n, &m);
-    for (int i = 1; i <= n; i++) {
-        scanf("%d", &w[i]);
-    }
-    sort(w + 1, w + n + 1);
-    memset(dp[0], 0, sizeof(dp[0]));
+    cin >> N >> M;
+    for (int i = 0; i < N; i++) cin >> coins[i];
+    sort(coins, coins + N, mycmp);
+    fill(dp[0], dp[0] + 10010 * 110, 0);
     bool flag = false;
-    // 01背包循环代码主体，本题中体积和价值一样
-    for (int i = 1; i <= n; i++) {
-        for (int v = m; v >= w[i]; v--) {
-            if (dp[i - 1][v] > dp[i - 1][v - w[i]] + w[i]) {
-                dp[i][v] = dp[i - 1][v];
-                choice[i][v] = false;
+    for (int j = coins[0]; j <= M; j++) {
+        dp[0][j] = coins[0];
+        choice[0][j] = true;
+        if (dp[0][M] == M) flag = true;
+    }
+    for (int i = 1; i < N; i++) {
+        for (int j = coins[i]; j <= M; j++) {
+            int x = dp[i - 1][j];
+            int y = dp[i - 1][j - coins[i]] + coins[i];
+            if (x > y) {
+                choice[i][j] = false;
+                dp[i][j] = x;
             } else {
-                dp[i][v] = dp[i - 1][v - w[i]] + w[i];
-                choice[i][v] = true;
+                choice[i][j] = true;
+                dp[i][j] = y;
             }
         }
-        if (dp[i][m] == m) {
-            flag = true;
-        }
+        if (dp[i][M] == M) flag = true;
     }
     if (flag == false) {
-        printf("No Solution\n");
+        cout << "No Solution";
     } else {
         int cnt = 0;
-        // 因为是从大到小排的，所以从后面开始遍历
-        for (int i = n; i > 0; i--) {
-            if (choice[i][m] == true) {
-                if (cnt != 0) {
-                    printf(" ");
-                }
-                m = m - w[i];  // 更新当前剩余价值
-                printf("%d", w[i]);
+        for (int i = N - 1; i >= 0; i--) {
+            if (choice[i][M] == true) {
+                if (cnt != 0) cout << " ";
+                cout << coins[i];
                 cnt++;
+                M = M - coins[i];
             }
         }
     }
-
     return 0;
 }

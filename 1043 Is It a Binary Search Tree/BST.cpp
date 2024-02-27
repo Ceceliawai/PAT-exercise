@@ -8,9 +8,10 @@ int N;
 
 bool IsBST(int root, int left, int right) {
     if (left > right) {
+        // 叶子节点，放到它原本的位置上，不需要调整
         if (root >= 0 && root < N) postorder[root] = preorder[root];
         return true;
-    }                // 节点为空，不需要进行任何操作
+    }
     int index = -1;  // 分界点的index
     int f = 0;       // f=0小于 f=1大于
     bool flag = true;
@@ -43,6 +44,9 @@ bool IsBST(int root, int left, int right) {
     if (f1 == false || f2 == false) return false;
 
     // 子树也都是BST，那么就需要进行移动
+    // 此时子树的postorder已经调整好，也就是除了root之外都是对的
+    // 所有的子树都在postorder的left和right之间
+    // 把孩子节点前移
     for (int i = root; i < right; i++) {
         postorder[i] = postorder[i + 1];
     }

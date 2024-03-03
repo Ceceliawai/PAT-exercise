@@ -5,7 +5,6 @@ using namespace std;
 int v[110][2];  // 0 for left and 1 for right
 int N, l, r, cnt = 0;
 int key[110], mdata[110];
-queue<int> q;
 void inorder(int root) {
     if (root == -1) return;
     inorder(v[root][0]);
@@ -27,9 +26,10 @@ int main() {
     sort(key, key + N);
     inorder(0);  // 维护所有的节点的值
     // 层次遍历
+    queue<int> q;
     q.push(0);
     int cur;
-    while (q.empty() != false) {
+    while (q.empty() == false) {  // 这里写成了!=false。。你怎么想的大哥
         cur = q.front();
         if (cur != 0) cout << " ";
         cout << mdata[cur];

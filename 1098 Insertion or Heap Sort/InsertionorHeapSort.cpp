@@ -32,20 +32,21 @@ void adjust(int root, int hsize) {
     origin[0] = origin[k];
     while (k <= hsize) {
         int child;
-        if (k * 2 > hsize)
+        if (k * 2 > hsize)  // 没有孩子了
             break;
-        else if (k * 2 + 1 > hsize)
+        else if (k * 2 + 1 > hsize)  // 只有左孩子了
             child = k * 2;
         else
             child = origin[k * 2] > origin[k * 2 + 1] ? k * 2 : k * 2 + 1;
-        if (origin[child] < origin[0])
+        if (origin[child] <
+            origin[0])  // 孩子比当前待填的数小，那就放在这个位置
             break;
         else {
-            origin[k] = origin[child];
+            origin[k] = origin[child];  // 孩子比待填的数大，孩子上移
             k = child;
         }
     }
-    origin[k] = origin[0];
+    origin[k] = origin[0];  // 填到合适的位置
 }
 bool isEqual() {
     for (int i = 1; i <= N; i++) {
@@ -104,11 +105,12 @@ int main() {
         // 堆顶元素和堆底互换，调整堆
         buildheap();
         int hpsize = N;
-        while (isEqual() == false) {
+        while (isEqual() == false) {  // 依次调整，比较是否是当前趟数
             swap(origin[1], origin[hpsize]);
             adjust(1, hpsize - 1);
             hpsize--;
         }
+        // 再heap sort一次
         swap(origin[1], origin[hpsize]);
         adjust(1, hpsize - 1);
         cout << "Heap Sort" << endl;

@@ -34,12 +34,25 @@ int main() {
     }
     bool flag = true;
     bool onlyleft = false;
+    bool meetnull = false;
     queue<int> q;
     q.push(root);
     int cur;
+    int lastnode = root;
     while (q.empty() == false) {
         cur = q.front();
+        if (cur != -1) {
+            lastnode = cur;
+        }
         q.pop();
+        if (cur == -1) {
+            meetnull = true;
+            continue;
+        }
+        if (meetnull == true && cur != -1) {
+            flag = false;
+            break;
+        }
         if (onlyleft == true) {
             if (v[cur][0] != -1 || v[cur][1] != -1) {
                 flag = false;
@@ -54,15 +67,15 @@ int main() {
             onlyleft = true;
             // 从这之后的必须是叶子节点
         }
-        if (v[cur][0] != -1) q.push(v[cur][0]);
-        if (v[cur][1] != -1) q.push(v[cur][1]);
+        q.push(v[cur][0]);
+        q.push(v[cur][1]);
     }
     if (flag == false) {
         cout << "NO " << root << endl;
     } else {
         cout << "YES ";
         // 层次遍历
-        cout << cur;
+        cout << lastnode;
     }
     return 0;
 }

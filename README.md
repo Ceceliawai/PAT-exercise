@@ -6,6 +6,8 @@
 
 题目标准解法git：https://github.com/liuchuo/PAT
 
+修改redme尝试
+
 ## 未AC题目编号
 - 1010
 - 1012
